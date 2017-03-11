@@ -1,10 +1,7 @@
 #pragma once
 
-#include <dyno.hpp>
 #include "vc/aux_/type_traits.hpp"
 #include "vc/aux_/utility.hpp"
-
-using namespace dyno::literals; // FIXME
 
 #define REQUIRES__(...) typename std::enable_if<(__VA_ARGS__), bool>::type = true
 #define REQUIRES_IMPL(...) is_valid_expr(__VA_ARGS__)) {}) _Pragma("GCC diagnostic pop")

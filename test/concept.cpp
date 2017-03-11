@@ -1,7 +1,6 @@
 #include <iostream>
 #include "vc/concepts/concept.hpp"
 #include "vc/concepts/callable.hpp"
-#include "vc/mocking/gmock.hpp"
 #include <GUnit.h>
 
 const auto Readable =
@@ -27,12 +26,8 @@ std::ostream& operator<<(std::ostream& os, FileReader&) {
   return os;
 }
 
-GTEST("GMock") {
-  SHOULD("mock Readable") {
-    Mock<decltype(Readable)> mock;
-    EXPECT_CALL(mock, (read)(42));
-    EXPECT_CALL(mock, (write)(1, 2.0)).WillOnce(Return(22));
-    mock.read(42);
-    EXPECT_EQ(22, mock.write(1, 2.0));
-  }
+GTEST("Should satisfies Readable") {
+  struct empty {};
+  static_assert(!satisfies<empty>(Readable), "");
+  static_assert(satisfies<FileReader>(Readable), "");
 }

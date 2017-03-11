@@ -54,5 +54,7 @@ else()
     endfunction()
 endif()
 
+test(test/any)
+test(test/concept)
 test(test/gmock)
 

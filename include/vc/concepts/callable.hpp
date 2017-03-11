@@ -1,6 +1,8 @@
 #pragma once
 
 #include "vc/concepts/concept.hpp"
+#include <dyno.hpp>
+using namespace dyno::literals; // FIXME
 
 #define FNAME(name)\
   [](auto t, auto r, auto... args) {\
