@@ -26,7 +26,7 @@ std::ostream& operator<<(std::ostream& os, FileReader&) {
 }
 ```
 
-###Test
+###Usage
 ```cpp
 int main() {
   static_assert(satisfies<FileReader>(Readable), "");
@@ -41,3 +41,20 @@ int main() {
   readable.read(42);
 }
 ```
+
+---
+
+##Dependencies
+* concepts
+  * STL
+* type_erasure (any)
+  * dyno
+    * boost.hana
+    * callable_traits
+* mocking (gmock)
+  * GUnit
+    * GoogleTest/GoogleMock
+
+##References
+* http://boost-experimental.github.io/di/concepts-driven-design-with-di/#/
+
