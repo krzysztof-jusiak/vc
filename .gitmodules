@@ -1,0 +1,9 @@
+[submodule "libs/hana"]
+	path = libs/hana
+	url = https://github.com/boostorg/hana.git
+[submodule "libs/callable_traits"]
+	path = libs/callable_traits
+	url = https://github.com/badair/callable_traits.git
+[submodule "libs/googletest"]
+	path = libs/googletest
+	url = https://github.com/google/googletest.git
