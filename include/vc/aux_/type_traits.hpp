@@ -2,6 +2,8 @@
 
 #include <type_traits>
 
+namespace aux {
+
 template<class...> struct type{};
 template<class T> struct identity{ using type = T; };
 template<class...> struct type_list {};
@@ -21,4 +23,8 @@ template<class...> using void_t = void;
 
 template<class>
 using always = std::true_type;
+}
+
+template<class... Ts>
+aux::type<Ts...> type{};
 

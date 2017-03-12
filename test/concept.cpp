@@ -28,6 +28,6 @@ std::ostream& operator<<(std::ostream& os, FileReader&) {
 
 GTEST("Should satisfies Readable") {
   struct empty {};
-  static_assert(!satisfies<empty>(Readable), "");
-  static_assert(satisfies<FileReader>(Readable), "");
+  static_assert(!Readable(type<empty>), "");
+  static_assert(Readable(type<FileReader>), "");
 }

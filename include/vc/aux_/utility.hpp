@@ -3,6 +3,8 @@
 #include <utility>
 #include "vc/aux_/type_traits.hpp"
 
+namespace aux {
+
 template <class... Ts>
 struct join {
   using type = type_list<>;
@@ -43,3 +45,5 @@ struct expr_wrapper {
   template<class... TArgs>
   auto operator()(TArgs&&... args) const -> decltype(((const T &)(*this))(std::forward<TArgs>(args)...)) { return ((const T &)(*this))(std::forward<TArgs>(args)...); }
 };
+
+}
