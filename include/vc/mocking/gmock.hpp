@@ -50,8 +50,10 @@ template <class>
 struct MockImpl;
 
 template <class T>
-struct Mock : MockImpl<typename T::type> {
+struct GMock2 : MockImpl<typename T::type> {
   using MockImpl<typename T::type>::MockImpl;
+  GMock2() = default;
+  GMock2(const GMock2&) {}
 };
 
 template <class... Ts>

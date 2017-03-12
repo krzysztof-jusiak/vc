@@ -47,7 +47,7 @@ struct any_impl;
 
 template <class TConcept>
 struct any : any_impl<typename TConcept::type> {
-  template<class T, REQUIRES__(TConcept{}(type<T>))>
+  template<class T>//, REQUIRES__(TConcept{}(type<T>))>
   any(T t)
    : any_impl<typename TConcept::type>{t}
   { }

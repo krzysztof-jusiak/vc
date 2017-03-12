@@ -4,13 +4,8 @@
 #include "vc/aux_/utility.hpp"
 
 #define REQUIRES__(...) typename std::enable_if<(__VA_ARGS__), bool>::type = true
-#define REQUIRES_IMPL(...) is_valid_expr(__VA_ARGS__)) {}) _Pragma("GCC diagnostic pop")
-#define REQUIRES(...)\
-  _Pragma("GCC diagnostic push")\
-  _Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")\
-  _Pragma("GCC diagnostic ignored \"-Wreturn-type\"")\
-  _Pragma("GCC diagnostic ignored \"-Wunused-local-typedef\"")\
-expr(std::false_type{}, []{}, [](__VA_ARGS__){}, [](__VA_ARGS__) -> decltype( REQUIRES_IMPL
+#define REQUIRES_IMPL(...) is_valid_expr(__VA_ARGS__)) {})
+#define REQUIRES(...) expr(std::false_type{}, []{}, [](__VA_ARGS__){}, [](__VA_ARGS__) -> decltype( REQUIRES_IMPL
 
 __attribute__((unused)) auto is_valid_expr = [](auto &&...) {};
 
@@ -95,4 +90,4 @@ struct expr_impl {
 template<class T, class T1, class T2, class T3>
 auto expr(T, T1, T2, T3) {
   return expr_impl<T, T1, T2, T3>{};
-};
+}

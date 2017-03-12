@@ -29,7 +29,7 @@ std::ostream& operator<<(std::ostream& os, FileReader&) {
 ###Usage
 ```cpp
 int main() {
-  static_assert(satisfies<FileReader>(Readable), "");
+  static_assert(Readable(type<FileReader)), "");
 
   // mocking
   Mock<decltype(Readable)> mock;

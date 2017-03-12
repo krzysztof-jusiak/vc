@@ -29,7 +29,7 @@ std::ostream& operator<<(std::ostream& os, FileReader&) {
 
 GTEST("GMock") {
   SHOULD("mock Readable") {
-    Mock<decltype(Readable)> mock;
+    GMock2<decltype(Readable)> mock;
     EXPECT_CALL(mock, (read)(42));
     EXPECT_CALL(mock, (write)(1, 2.0)).WillOnce(Return(22));
     mock.read(42);

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "vc/concepts/concept.hpp"
+#if defined(__clang__)
+#pragma clang diagnostic ignored "-Wgnu-string-literal-operator-template"
+#endif
 #include <dyno.hpp>
 using namespace dyno::literals; // FIXME
 
@@ -24,15 +27,11 @@ using namespace dyno::literals; // FIXME
   }
 
 #define REQUIRES3(p, ...) \
-  _Pragma("GCC diagnostic push")\
-  _Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")\
-  _Pragma("GCC diagnostic ignored \"-Wreturn-type\"")\
-  _Pragma("GCC diagnostic ignored \"-Wunused-local-typedef\"")\
-      expr(\
-          std::true_type{}\
-        , [&] { return p; }\
-        , [](__VA_ARGS__){}\
-        , [](__VA_ARGS__) -> decltype( REQUIRES_IMPL
+  expr(\
+      std::true_type{}\
+    , [&] { return p; }\
+    , [](__VA_ARGS__){}\
+    , [](__VA_ARGS__) -> decltype( REQUIRES_IMPL
 
 template<class R, class... Ts, class X>
 auto CallableImpl(aux::type<R(Ts...)>, X x) {
@@ -42,5 +41,5 @@ auto CallableImpl(aux::type<R(Ts...)>, X x) {
 template<class T, class X>
 auto Callable(X x) {
   return CallableImpl(aux::type<T>{}, x);
-};
+}
 

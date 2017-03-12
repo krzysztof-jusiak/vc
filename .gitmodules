@@ -13,3 +13,6 @@
 [submodule "libs/GUnit"]
 	path = libs/GUnit
 	url = https://github.com/cpp-testing/GUnit.git
+[submodule "libs/di"]
+	path = libs/di
+	url = https://github.com/boost-experimental/di.git

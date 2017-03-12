@@ -2,6 +2,7 @@
 #include "vc/concepts/concept.hpp"
 #include "vc/concepts/callable.hpp"
 #include "vc/type_erasure/any.hpp"
+#include "vc/mocking/gmock.hpp"
 #include <GUnit.h>
 
 const auto Readable =
@@ -35,6 +36,7 @@ GTEST("any") {
   }
 
   SHOULD("Be constructible from GMock") {
+    //GMock2<decltype(Readable)> mock;
     //any<decltype(Readable)> readable = mock;
   }
 }
