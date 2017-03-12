@@ -42,8 +42,9 @@ using apply_t = typename apply<T, D>::type;
 
 template <class T>
 struct expr_wrapper {
-  template<class... TArgs>
-  auto operator()(TArgs&&... args) const -> decltype(((const T &)(*this))(std::forward<TArgs>(args)...)) { return ((const T &)(*this))(std::forward<TArgs>(args)...); }
+  template <class... TArgs>
+  auto operator()(TArgs &&... args) const -> decltype(((const T &)(*this))(std::forward<TArgs>(args)...)) {
+    return ((const T &)(*this))(std::forward<TArgs>(args)...);
+  }
 };
-
 }

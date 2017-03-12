@@ -57,4 +57,3 @@ int main() {
 
 ##References
 * http://boost-experimental.github.io/di/concepts-driven-design-with-di/#/
-
