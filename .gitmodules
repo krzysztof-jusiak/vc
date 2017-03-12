@@ -7,3 +7,9 @@
 [submodule "libs/googletest"]
 	path = libs/googletest
 	url = https://github.com/google/googletest.git
+[submodule "libs/dyno"]
+	path = libs/dyno
+	url = https://github.com/ldionne/dyno.git
+[submodule "libs/GUnit"]
+	path = libs/GUnit
+	url = https://github.com/cpp-testing/GUnit.git
