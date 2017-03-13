@@ -7,7 +7,7 @@
 ###Concept
 ```cpp
 const auto Readable =
-  $requires(auto&& t, std::ostream& os)(
+  $requires(auto&& t, std::ostream& os) (
     T(t),   // copy constructible
     os << t // printable
   ) &&
