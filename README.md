@@ -7,10 +7,11 @@
 ###Concept
 ```cpp
 const auto Readable =
-  REQUIRES(auto&& t, std::ostream& os)(
+  $requires(auto&& t, std::ostream& os)(
+    T(t),   // copy constructible
     os << t // printable
   ) &&
-  Callable<void(int)>(FNAME(read));
+  Callable<void(int)>($fname(read)); // read callable
 ```
 
 ###Implementation
@@ -29,16 +30,22 @@ std::ostream& operator<<(std::ostream& os, FileReader&) {
 ###Usage
 ```cpp
 int main() {
-  static_assert(Readable(type<FileReader)), "");
+  // constraint checking
+  static_assert(requires<FileReader>(Readable), "");
 
-  // mocking
-  Mock<decltype(Readable)> mock;
+  // type erasure - dynamic dispatch
+  any<$(Readable)> readable = FileReader{};
+  readable.read(42);
+  
+  // type erasure mocking
+  readable = GMock<$(Readable)>{};
+  EXPECT_CALL(mock, (read)(42));
+  readable.read(42);
+  
+  // template mocking
+  GMock<$(Readable)> mock;
   EXPECT_CALL(mock, (read)(42));
   mock.read(42);
-
-  // type erasure
-  any<decltype(Readable)> readable = FileReader{};
-  readable.read(42);
 }
 ```
 
