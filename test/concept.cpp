@@ -3,8 +3,15 @@
 #include <iostream>
 #include "vc/concepts/callable.hpp"
 
-const auto Readable = REQUIRES(auto&& t, std::ostream& os)(os << t, t) && Callable<void(float)>(FNAME(read)) &&
-                      Callable<short(char, double)>(FNAME(write));
+// clang-format off
+const auto Readable =
+  $requires(auto&& t, std::ostream& os)(
+    os << t,
+    T(t)
+  ) &&
+  Callable<void(float)>($fname(read)) &&
+  Callable<short(char, double)>($fname(write));
+// clang-format off
 
 struct FileReader {
   void read(float) const { std::cout << __PRETTY_FUNCTION__ << std::endl; }

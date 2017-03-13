@@ -9,7 +9,7 @@ template <class TCallable, class T>
 struct accept {
   using type =
       aux::type_list<typename base<TCallable, typename T::call,
-                                   aux::function_traits_t<decltype(&T::parameters::template operator() < _1 >), _1>>::type>;
+                                   aux::function_traits_t<decltype(&T::parameters::template operator()<_1>), _1>>::type>;
 };
 
 template <class T>
@@ -53,6 +53,6 @@ template <class... Ts>
 struct any_impl<aux::type_list<Ts...>>
     : any_impl_base<Ts...>,
       base<typename Ts::callable, typename Ts::call,
-           aux::function_traits_t<decltype(&Ts::parameters::template operator() < _1 >), any_impl_base<Ts...>>>::type... {
+           aux::function_traits_t<decltype(&Ts::parameters::template operator()<_1>), any_impl_base<Ts...>>>::type... {
   using any_impl_base<Ts...>::any_impl_base;
 };

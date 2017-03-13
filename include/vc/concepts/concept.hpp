@@ -3,9 +3,13 @@
 #include "vc/aux_/type_traits.hpp"
 #include "vc/aux_/utility.hpp"
 
+#define __REQUIRES_IMPL(...) is_valid_expr(__VA_ARGS__)) {})
+
 #define REQUIRES__(...) typename std::enable_if<(__VA_ARGS__), bool>::type = true
-#define REQUIRES_IMPL(...) is_valid_expr(__VA_ARGS__)) {})
-#define REQUIRES(...) requires_expr(std::false_type{}, []{}, [](__VA_ARGS__){}, [](__VA_ARGS__) -> decltype( REQUIRES_IMPL
+#define REQUIRES(...) requires_expr(std::false_type{}, []{}, [](__VA_ARGS__){}, [](__VA_ARGS__) -> decltype( __REQUIRES_IMPL
+
+#define $requires REQUIRES
+#define $ decltype
 
 __attribute__((unused)) auto is_valid_expr = [](auto &&...) {};
 
@@ -36,7 +40,7 @@ struct constraint;
 template <class T, class T1, class T2, class... Ts>
 struct constraint<std::true_type, T, aux::type_list<T1, T2, Ts...>> {
   using expr = typename base<std::true_type, typename T::call,
-                             aux::function_traits_t<decltype(&T::parameters::template operator() < _1 >), _1>>::type;
+                             aux::function_traits_t<decltype(&T::parameters::template operator()<_1>), _1>>::type;
   using constr = decltype(expr::constraint());
   using type = typename models<aux::expr_wrapper<constr>(T1, Ts...)>::type;
 };
@@ -50,7 +54,7 @@ constexpr auto satisfies_impl(aux::type_list<Ts...>) {
   return std::is_same<aux::type_list<aux::always<Ts>...>,
                       aux::type_list<typename constraint<
                           typename Ts::callable, Ts,
-                          aux::function_traits_t<decltype(&Ts::parameters::template operator() < _1 >), T>>::type...>>::value;
+                          aux::function_traits_t<decltype(&Ts::parameters::template operator()<_1>), T>>::type...>>::value;
 }
 
 template <class... Ts>

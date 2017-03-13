@@ -61,6 +61,6 @@ template <class... Ts>
 struct MockImpl<aux::type_list<Ts...>>
     : MockImplBase,
       base<typename Ts::callable, typename Ts::call,
-           aux::function_traits_t<decltype(&Ts::parameters::template operator() < _1 >), MockImplBase>>::type... {
+           aux::function_traits_t<decltype(&Ts::parameters::template operator()<_1>), MockImplBase>>::type... {
   using type = MockImpl;
 };

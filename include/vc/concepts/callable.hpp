@@ -26,16 +26,11 @@ using namespace dyno::literals;  // FIXME
     return _;                                                                                                           \
   }
 
-#define REQUIRES3(p, ...) \
-  requires_expr(\
-      std::true_type{}\
-    , [&] { return p; }\
-    , [](__VA_ARGS__){}\
-    , [](__VA_ARGS__) -> decltype( REQUIRES_IMPL
+#define $fname FNAME
 
 template <class R, class... Ts, class X>
 auto CallableImpl(aux::type<R(Ts...)>, X x) {
-  return REQUIRES3(x, auto&&, aux::identity<R>, Ts...)(int{});  // TODO is empty __VA_ARGS__
+  return requires_expr(std::true_type{}, [&x] { return x; }, [](auto&&, aux::identity<R>, Ts...) {}, [](...) {});
 }
 
 template <class T, class X>

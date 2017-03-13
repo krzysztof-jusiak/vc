@@ -7,9 +7,11 @@
 
 // clang-format off
 const auto Readable =
-  REQUIRES(auto&& t, std::ostream& os)( os << t ) &&
-  Callable<void(float)>( FNAME(read) ) &&
-  Callable<short(char, double)>( FNAME(write) );
+  $requires(auto&& t, std::ostream& os) (
+    os << t
+  ) &&
+  Callable<void(float)>( $fname(read) ) &&
+  Callable<short(char, double)>( $fname(write) );
 // clang-format on
 
 struct FileReader {
@@ -30,15 +32,15 @@ std::ostream& operator<<(std::ostream& os, GMock2<T>&) {
 
 GTEST("any") {
   SHOULD("hold anything Readable") {
-    any<decltype(Readable)> readable = FileReader{};
+    any<$(Readable)> readable = FileReader{};
     readable.read(42);
     readable.write(2, 42.0);
   }
 
   SHOULD("Be constructible from GMock") {
     // static_assert(Readable(type<GMock2<decltype(Readable)>>), "");
-    GMock2<decltype(Readable)> mock;
-    any<decltype(Readable)> readable = mock;
+    GMock2<$(Readable)> mock;
+    any<$(Readable)> readable = mock;
     EXPECT_CALL(mock, (read)(42));
     EXPECT_CALL(mock, (write)(1, 2.0));
     readable.read(42);
