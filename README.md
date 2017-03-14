@@ -38,7 +38,7 @@ int main() {
   readable.read(42);
   
   // type erasure mocking
-  readable = GMock<$(Readable)>{};
+  readable = GMock<decltype(Readable)>{};
   EXPECT_CALL(mock, read, 42);
   readable.read(42);
   
