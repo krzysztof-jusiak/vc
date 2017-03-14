@@ -11,7 +11,7 @@ const auto Readable =
     T(t),   // copy constructible
     os << t // printable
   ) &&
-  Callable<void(int)>($fname(read)); // read callable
+  Callable<void(int)>( $fname(read) ); // read callable
 ```
 
 ###Implementation
@@ -39,12 +39,12 @@ int main() {
   
   // type erasure mocking
   readable = GMock<$(Readable)>{};
-  EXPECT_CALL(mock, (read)(42));
+  EXPECT_CALL(mock, read, 42);
   readable.read(42);
   
   // template mocking
   GMock<$(Readable)> mock;
-  EXPECT_CALL(mock, (read)(42));
+  EXPECT_CALL(mock, read, 42);
   mock.read(42);
 }
 ```
