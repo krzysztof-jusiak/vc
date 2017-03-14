@@ -7,11 +7,11 @@
 ###Concept
 ```cpp
 const auto Readable =
-  $requires(auto&& t, std::ostream& os) (
+  REQUIRES(auto&& t, std::ostream& os) (
     T(t),   // copy constructible
     os << t // printable
   ) &&
-  Callable<void(int)>( $fname(read) ); // read callable
+  Callable<void(int)>( $(read) ); // read callable
 ```
 
 ###Implementation
@@ -34,7 +34,7 @@ int main() {
   static_assert(requires<FileReader>(Readable), "");
 
   // type erasure - dynamic dispatch
-  any<$(Readable)> readable = FileReader{};
+  any<decltype(Readable)> readable = FileReader{};
   readable.read(42);
   
   // type erasure mocking
@@ -43,7 +43,7 @@ int main() {
   readable.read(42);
   
   // template mocking
-  GMock<$(Readable)> mock;
+  GMock<decltype(Readable)> mock;
   EXPECT_CALL(mock, read, 42);
   mock.read(42);
 }
