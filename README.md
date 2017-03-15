@@ -7,11 +7,11 @@
 ###Concept
 ```cpp
 const auto Readable =
-  REQUIRES(auto&& t, std::ostream& os) (
+  $requires(auto&& t, std::ostream& os) (
     T(t),   // copy constructible
     os << t // printable
   ) &&
-  Callable<void(int)>( $(read) ); // read callable
+  $(read)<void(int)>();
 ```
 
 ###Implementation
