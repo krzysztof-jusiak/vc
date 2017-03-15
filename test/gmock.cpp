@@ -10,8 +10,8 @@ const auto Readable =
     os << t,
     T(t)
   ) &&
-  Callable<void(float)>($fname(read)) &&
-  Callable<short(char, double)>($fname(write));
+  $(read)<void(float)>() &&
+  $(write)<short(char, double)>();
 // clang-format off
 
 struct FileReader {
@@ -27,7 +27,7 @@ std::ostream& operator<<(std::ostream& os, FileReader&) { return os; }
 
 GTEST("GMock") {
   SHOULD("mock Readable") {
-    GMock2<$(Readable)> mock;
+    GMock2<decltype(Readable)> mock;
     EXPECT_CALL(mock, (read)(42));
     EXPECT_CALL(mock, (write)(1, 2.0)).WillOnce(Return(22));
     mock.read(42);

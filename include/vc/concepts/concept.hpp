@@ -5,11 +5,10 @@
 
 #define __REQUIRES_IMPL(...) is_valid_expr(__VA_ARGS__)) {})
 
-#define REQUIRES__(...) typename std::enable_if<(__VA_ARGS__), bool>::type = true
-#define REQUIRES(...) requires_expr(std::false_type{}, []{}, [](__VA_ARGS__){}, [](__VA_ARGS__) -> decltype( __REQUIRES_IMPL
+#define REQUIRES(...) typename std::enable_if<(__VA_ARGS__), bool>::type = true
+#define REQUIRES_EXPR(...) requires_expr(std::false_type{}, []{}, [](__VA_ARGS__){}, [](__VA_ARGS__) -> decltype( __REQUIRES_IMPL
 
-#define $requires REQUIRES
-#define $ decltype
+#define $requires REQUIRES_EXPR
 
 __attribute__((unused)) auto is_valid_expr = [](auto &&...) {};
 

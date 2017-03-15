@@ -9,8 +9,8 @@ const auto Readable =
     os << t,
     T(t)
   ) &&
-  Callable<void(float)>($fname(read)) &&
-  Callable<short(char, double)>($fname(write));
+  $(read)<void(float)>() &&
+  $(write)<short(char, double)>();
 // clang-format off
 
 struct FileReader {
