@@ -14,9 +14,9 @@ const auto Incrementable =
 
 ```cpp
 const auto Iterator() {
-  return CopyConstructible() and
-         CopyAssignable() and
-         Destructible() and
+  return CopyConstructible() &&
+         CopyAssignable() &&
+         Destructible() &&
          $requires(auto&& t) (
            *t,
            typename decltype(t)::type
@@ -33,10 +33,10 @@ const auto Creatable = $(create)<T(Ts...)>();
 ```cpp
 struct Readable {
   auto operator()() {
-    return CopyConstructible() and
+    return CopyConstructible() &&
            $requires(auto&& t, std::ostream& os) (
               os = (os << t) // printable
-           ) and
+           ) &&
            $(read)<void(int)>();
   }
 };
