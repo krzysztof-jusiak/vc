@@ -9,7 +9,7 @@
 struct Readable {
   auto operator()() const {
     return $requires(auto&& t, std::ostream& os) (
-      os << t
+      os = (os << t) // printable
     ) &&
     $(read)<void(float)>() &&
     $(write)<short(char, double)>();

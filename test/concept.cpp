@@ -6,8 +6,8 @@
 // clang-format off
 const auto Readable =
   $requires(auto&& t, std::ostream& os)(
-    os << t,
-    T(t)
+      decltype(t)(t), // copy constructible
+      os << t
   ) &&
   $(read)<void(float)>() &&
   $(write)<short(char, double)>();
@@ -27,5 +27,5 @@ std::ostream& operator<<(std::ostream& os, FileReader&) { return os; }
 GTEST("Should satisfies Readable") {
   struct empty {};
   static_assert(!Readable(type<empty>), "");
-  // static_assert(Readable(type<FileReader>), "");
+  static_assert(Readable(type<FileReader>), "");
 }
