@@ -79,7 +79,7 @@ int main() {
   * [GUnit](https://github.com/cpp-testing/GUnit)
     * [Google Test/Mock](https://github.com/google/googletest)
 * Dependency Injection
-    * [[Boost].DI]](https://github.com/boost-experimental/di)
+    * [[Boost].DI](https://github.com/boost-experimental/di)
 
 ##References
 * [Concept Checking in C++11](http://ericniebler.com/2013/11/23/concept-checking-in-c11) | [Type requirements in C++](http://pfultz2.com/blog/2014/08/17/type-requirements)
