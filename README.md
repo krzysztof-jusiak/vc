@@ -59,15 +59,15 @@ std::ostream& operator<<(std::ostream& os, FileReader&) {
 ```cpp
 int main() {
   // constraint checking
-  static_assert(models<Readable(FileReader)>(), "");
+  static_assert(vc::models<Readable(FileReader)>(), "");
   
   // template mocking
-  GMock<Readable> mock;
+  testing::GMock<Readable> mock;
   EXPECT_CALL(mock, read, 42);
   mock.read(42);
   
   // type erasure - dynamic dispatch
-  any<Readable> readable = FileReader{};
+  type_erasure::any<Readable> readable = FileReader{};
   readable.read(42);
   
   // type erasure mocking
@@ -97,11 +97,27 @@ public:
 int main() {
   const auto injector = di::make_injector(
      di::bind<Readable>.to<FileReader>()
-     di::bind<Printable>.to<ConsolePrinter>() // might be dynamic
+     di::bind<Printable>.to<ConsolePrinter>()
   );
   
   injector.create<App>().run();
 }
+```
+
+###Testing
+```cpp
+"should print read text"_test = [] {
+  constexpr auto value = 42;
+
+  auto [sut, mocks] = testing::make<App>(); // creates System Under Test
+                                            // and mocks
+
+  InSequence sequence;
+  EXPECT_CALL(mocks<Readable>(), read).WillOnce(Return(value));
+  EXPECT_CALL(mocks<Printable>(), print, value);
+
+  sut.run();
+};
 ```
 
 ---
