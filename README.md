@@ -13,7 +13,6 @@ const auto Incrementable =
 ```
 
 ```cpp
-template<class U>
 const auto Iterator() {
   return CopyConstructible() && 
          CopyAssignable() &&
