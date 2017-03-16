@@ -79,13 +79,13 @@ int main() {
 
 ###DI
 ```cpp
-template<class TReader = Readable, class TPrinter = Printable>
+template<class TReader = Readable> // = 'Concept'
 class App {
-  TReader reader;         // static dispatch
-  any<Printable> printer; // dynamic dispatch
+  TReader reader;                       // static dispatch
+  type_erasure::any<Printable> printer; // dynamic dispatch
   
 public:
-  App(TReader reader, any<Printable> printer)
+  App(TReader reader, type_erasure::any<Printable> printer)
    : reader(reader), printer(printer)
   { }
   
