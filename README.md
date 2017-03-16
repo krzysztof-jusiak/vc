@@ -8,7 +8,8 @@
 ```cpp
 const auto Incrementable =
   $requires(auto&& t) (
-    t++, t + t
+    t++,
+    t + t
   );
 ```
 
