@@ -22,7 +22,7 @@ struct Readable {
   auto operator()() {
     return $requires(auto&& t, std::ostream& os) (
       T(t), // copy constructible
-      os << t
+      os = (os << t) // printable
     )
     && $(read)<void(int)>();
   }
