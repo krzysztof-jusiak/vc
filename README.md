@@ -6,12 +6,27 @@
 
 ###Concept
 ```cpp
-const auto Readable =
+const auto Concept =
   $requires(auto&& t, std::ostream& os) (
     T(t),   // copy constructible
     os << t // printable
-  ) &&
-  $(read)<void(int)>();
+  );
+```
+
+```cpp
+template<class T, class... Ts>
+const auto Creatable = $(create)<T(Ts...)>();  
+```
+
+```cpp
+struct Readable {
+  auto operator()() {
+    return $requires(auto&& t, std::ostream& os) (
+      T(t), // copy constructible
+      os << t
+    ) && $(read)<void(int)>();
+  }
+};
 ```
 
 ###Implementation
