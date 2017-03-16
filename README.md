@@ -10,7 +10,8 @@ const auto Concept =
   $requires(auto&& t, std::ostream& os) (
     T(t),   // copy constructible
     os << t // printable
-  );
+  ) &&
+  Callable<void(int)>;
 ```
 
 ```cpp
@@ -24,7 +25,8 @@ struct Readable {
     return $requires(auto&& t, std::ostream& os) (
       T(t), // copy constructible
       os << t
-    ) && $(read)<void(int)>();
+    ) &&
+    $(read)<void(int)>();
   }
 };
 ```
@@ -46,19 +48,19 @@ std::ostream& operator<<(std::ostream& os, FileReader&) {
 ```cpp
 int main() {
   // constraint checking
-  static_assert(requires<FileReader>(Readable), "");
+  static_assert(models<Readable(FileReader)>(), "");
 
   // type erasure - dynamic dispatch
-  any<decltype(Readable)> readable = FileReader{};
+  any<Readable> readable = FileReader{};
   readable.read(42);
   
   // type erasure mocking
-  readable = GMock<decltype(Readable)>{};
+  readable = GMock<Readable>{};
   EXPECT_CALL(mock, read, 42);
   readable.read(42);
   
   // template mocking
-  GMock<decltype(Readable)> mock;
+  GMock<Readable> mock;
   EXPECT_CALL(mock, read, 42);
   mock.read(42);
 }
@@ -67,15 +69,22 @@ int main() {
 ---
 
 ##Dependencies
-* concepts
-  * STL
-* type_erasure (any)
-  * dyno
-    * boost.hana
-    * callable_traits
-* mocking (gmock)
-  * GUnit
-    * GoogleTest/GoogleMock
+* Concepts
+  * [STL](http://en.cppreference.com/w)
+* Type Erasure (any)
+  * [dyno](https://github.com/ldionne/dyno)
+    * [Boost.Hana](https://github.com/boostorg/hana)
+    * [CallableTraits](https://github.com/badair/callable_traits)
+* Mocking (GMock)
+  * [GUnit](https://github.com/cpp-testing/GUnit)
+    * [Google Test/Mock](https://github.com/google/googletest)
+* Dependency Injection
+    * [[Boost].DI]](https://github.com/boost-experimental/di)
 
 ##References
-* http://boost-experimental.github.io/di/concepts-driven-design-with-di/#/
+* [Concept Checking in C++11](http://ericniebler.com/2013/11/23/concept-checking-in-c11) | [Type requirements in C++](http://pfultz2.com/blog/2014/08/17/type-requirements)
+* [A bit of background for concepts](https://isocpp.org/blog/2016/02/a-bit-of-background-for-concepts-and-cpp17-bjarne-stroustrup)
+* [Concepts Lite](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3580.pdf)
+* [Vitual Concepts Proposal](https://github.com/andyprowl/virtual-concepts/blob/master/draft/Dynamic%20Generic%20Programming%20with%20Virtual%20Concepts.pdf)
+* [Concepts driven design with DI](http://boost-experimental.github.io/di/concepts-driven-design-with-di)
+* [Static reflection](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0194r0.pdf)
