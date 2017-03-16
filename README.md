@@ -77,6 +77,33 @@ int main() {
 }
 ```
 
+###DI
+```cpp
+template<class TReader = Readable, class TPrinter = Printable>
+class App {
+  TReader reader;         // static dispatch
+  any<Printable> printer; // dynamic dispatch
+  
+public:
+  App(TReader reader, any<Printable> printer)
+   : reader(reader), printer(printer)
+  { }
+  
+  void run() {
+    printer.print(reader.read());
+  }
+};
+
+int main() {
+  const auto injector = di::make_injector(
+     di::bind<Readable>.to<FileReader>()
+     di::bind<Printable>.to<ConsolePrinter>() // might be dynamic
+  );
+  
+  injector.create<App>().run();
+}
+```
+
 ---
 
 ##Dependencies
