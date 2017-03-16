@@ -53,8 +53,8 @@ template <class>
 struct MockImpl;
 
 template <class T>
-struct GMock2 : MockImpl<typename T::type> {
-  using MockImpl<typename T::type>::MockImpl;
+struct GMock2 : MockImpl<typename decltype(std::declval<T>()())::type> {
+  using MockImpl<typename decltype(std::declval<T>()())::type>::MockImpl;
 };
 
 template <class... Ts>

@@ -69,6 +69,10 @@ struct and_ {
   constexpr bool operator()(aux::type<T>) const {
     return satisfies_impl<T>(type{});
   }
+
+  constexpr auto operator()() const {
+    return *this;
+  }
 };
 
 template <class T, class T1, class T2, class T3>
@@ -87,6 +91,10 @@ struct requires_expr_impl {
   template <class U>
   constexpr bool operator()(aux::type<U>) const {
     return satisfies_impl<U>(type{});
+  }
+
+  constexpr auto operator()() const {
+    return *this;
   }
 };
 

@@ -44,9 +44,9 @@ template <class>
 struct any_impl;
 
 template <class TConcept>
-struct any : any_impl<typename TConcept::type> {
+struct any : any_impl<typename decltype(std::declval<TConcept>()())::type> {
   template <class T>  //, REQUIRES__(TConcept{}(type<T>))>
-  any(T t) : any_impl<typename TConcept::type>{t} {}
+  any(T t) : any_impl<typename decltype(std::declval<TConcept>()())::type>{t} {}
 };
 
 template <class... Ts>
