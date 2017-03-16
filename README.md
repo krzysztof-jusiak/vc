@@ -8,10 +8,11 @@
 ```cpp
 const auto Concept =
   $requires(auto&& t, std::ostream& os) (
-    T(t),   // copy constructible
-    os << t // printable
-  ) &&
-  Callable<void(int)>;
+    t++,
+    t--,
+    *t,
+    t.get()
+  );
 ```
 
 ```cpp
@@ -25,8 +26,8 @@ struct Readable {
     return $requires(auto&& t, std::ostream& os) (
       T(t), // copy constructible
       os << t
-    ) &&
-    $(read)<void(int)>();
+    )
+    && $(read)<void(int)>();
   }
 };
 ```
