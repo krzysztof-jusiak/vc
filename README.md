@@ -34,10 +34,11 @@ const auto Creatable = $(create)<T(Ts...)>();
 ```cpp
 struct Readable {
   auto operator()() {
-    return $requires(auto&& t, std::ostream& os) (
-      T(t),          // copy constructible
-      os = (os << t) // printable
-    ) && $(read)<void(int)>();
+    return CopyConstructible() &&
+           $requires(auto&& t, std::ostream& os) (
+              os = (os << t) // printable
+           ) &&
+           $(read)<void(int)>();
   }
 };
 ```
