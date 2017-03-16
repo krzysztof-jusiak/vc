@@ -6,12 +6,9 @@
 
 ###Concept
 ```cpp
-const auto Concept =
-  $requires(auto&& t, std::ostream& os) (
-    t++,
-    t--,
-    *t,
-    t.get()
+const auto Incrementable =
+  $requires(auto&& t) (
+    t++, t + t
   );
 ```
 
@@ -50,7 +47,12 @@ std::ostream& operator<<(std::ostream& os, FileReader&) {
 int main() {
   // constraint checking
   static_assert(models<Readable(FileReader)>(), "");
-
+  
+  // template mocking
+  GMock<Readable> mock;
+  EXPECT_CALL(mock, read, 42);
+  mock.read(42);
+  
   // type erasure - dynamic dispatch
   any<Readable> readable = FileReader{};
   readable.read(42);
@@ -59,11 +61,6 @@ int main() {
   readable = GMock<Readable>{};
   EXPECT_CALL(mock, read, 42);
   readable.read(42);
-  
-  // template mocking
-  GMock<Readable> mock;
-  EXPECT_CALL(mock, read, 42);
-  mock.read(42);
 }
 ```
 
