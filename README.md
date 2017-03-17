@@ -60,7 +60,7 @@ std::ostream& operator<<(std::ostream& os, FileReader&) {
 ```cpp
 int main() {
   // constraint checking
-  static_assert(vc::models<Readable(FileReader)>(), "");
+  static_assert(vc::is<Readable>.satisfied_by<FileReader>(), "");
   
   // template mocking
   testing::GMock<Readable> mock;
