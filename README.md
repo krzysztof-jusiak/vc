@@ -67,8 +67,8 @@ int main() {
   static_assert(Readable{}.operator()<FileReader>(), "");
   
   // template mocking
-  testing::GMock<Readable> mock;
-  EXPECT_CALL(mock, read, 42);
+  testing::GMock<Readable> mockReadable;
+  EXPECT_CALL(mockReadable, read, 42);
   mock.read(42);
   
   // type erasure - dynamic dispatch
