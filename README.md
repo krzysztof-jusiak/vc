@@ -6,19 +6,21 @@
 
 ###Concept
 ```cpp
-const auto Incrementable =
-  $requires(auto&& t) (
-    t++,
-    t + t
+template<class T>
+const auto Equality_comparable =
+  $requires(T)(auto a, auto b) (
+    bool(a == b),
+    bool(a != b)
   );
 ```
 
 ```cpp
+template<class T>
 const auto Iterator() {
-  return CopyConstructible() &&
-         CopyAssignable() &&
-         Destructible() &&
-         $requires(auto&& t) (
+  return CopyConstructible<T> &&
+         CopyAssignable<T> &&
+         Destructible<T> &&
+         $requires(T)(auto&& t) (
            *t,
            typename decltype(t)::type
          );
@@ -27,18 +29,19 @@ const auto Iterator() {
 ```
 
 ```cpp
-template<class T, class... Ts>
-const auto Creatable = $(create)<T(Ts...)>();  
+template<class T, class R, class... Ts>
+const auto Creatable = Callable<T, R(Ts...)>($(create));
 ```
 
 ```cpp
 struct Readable {
+  template<class T>
   auto operator()() {
     return CopyConstructible() &&
-           $requires(auto&& t, std::ostream& os) (
-              os = (os << t) // printable
-           ) &&
-           $(read)<void(int)>();
+       $requires(T)(auto&& t, std::ostream& os) (
+          os = (os << t)
+       ) &&
+       Callable<T, void(int)>($(read));
   }
 };
 ```
@@ -60,7 +63,8 @@ std::ostream& operator<<(std::ostream& os, FileReader&) {
 ```cpp
 int main() {
   // constraint checking
-  static_assert(vc::is<Readable>.satisfied_by<FileReader>(), "");
+  static_assert(Equality_comparable<int>, "");
+  static_assert(Readable{}.operator()<FileReader>(), "");
   
   // template mocking
   testing::GMock<Readable> mock;
@@ -111,7 +115,7 @@ int main() {
   constexpr auto value = 42;
 
   auto [sut, mocks] = testing::make<App>(); // creates System Under Test
-                                            // and mocks
+                                            // and Mocks
 
   InSequence sequence;
   EXPECT_CALL(mocks<Readable>(), read).WillOnce(Return(value));
