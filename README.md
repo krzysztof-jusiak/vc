@@ -78,7 +78,7 @@ int main() {
   // template mocking
   testing::GMock<Readable> mockReadable;
   EXPECT_CALL(mockReadable, read, 42);
-  mock.read(42);
+  mockReadable.read(42);
   
   // type erasure - dynamic dispatch
   type_erasure::any<Readable> readable = FileReader{};
