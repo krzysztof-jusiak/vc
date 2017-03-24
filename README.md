@@ -29,6 +29,15 @@ const auto Iterator() {
 ```
 
 ```cpp
+template<class T, class F, class R, class... Ts>
+const auto Callable(F f) {
+  return $requires(T)(auto&& t, Ts... args) (
+    R((t.*f)(args...));
+  )
+}
+```
+
+```cpp
 template<class T, class R, class... Ts>
 const auto Creatable = Callable<T, R(Ts...)>($(create));
 ```
