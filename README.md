@@ -91,7 +91,7 @@ int main() {
 }
 ```
 
-###DI
+###Dependency Injection - [[Boost].DI](https://github.com/boost-experimental/di)
 ```cpp
 template<class TReader = Readable> // = 'Concept'
 class App {
