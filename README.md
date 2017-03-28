@@ -2,9 +2,9 @@
 
 ---------------------------------------
 
-#Virtual Concepts
+# Virtual Concepts
 
-###Concept
+### Concept
 ```cpp
 template<class T>
 const auto Equality_comparable =
@@ -55,7 +55,7 @@ struct Readable {
 };
 ```
 
-###Implementation
+### Implementation
 ```cpp
 struct FileReader {
   void read(int) const {
@@ -68,7 +68,7 @@ std::ostream& operator<<(std::ostream& os, FileReader&) {
 }
 ```
 
-###Usage
+### Usage
 ```cpp
 int main() {
   // constraint checking
@@ -91,7 +91,7 @@ int main() {
 }
 ```
 
-###Dependency Injection - [[Boost].DI](https://github.com/boost-experimental/di)
+### Dependency Injection - [[Boost].DI](https://github.com/boost-experimental/di)
 ```cpp
 template<class TReader = Readable> // = 'Concept'
 class App {
@@ -118,7 +118,7 @@ int main() {
 }
 ```
 
-###Testing
+### Testing
 ```cpp
 "should print read text"_test = [] {
   constexpr auto value = 42;
@@ -136,7 +136,7 @@ int main() {
 
 ---
 
-##Dependencies
+## Dependencies
 * Concepts
   * [STL](http://en.cppreference.com/w)
 * Type Erasure (any)
@@ -149,7 +149,7 @@ int main() {
 * Dependency Injection
     * [[Boost].DI](https://github.com/boost-experimental/di)
 
-##References
+## References
 * [Concept Checking in C++11](http://ericniebler.com/2013/11/23/concept-checking-in-c11) | [Type requirements in C++](http://pfultz2.com/blog/2014/08/17/type-requirements)
 * [A bit of background for concepts](https://isocpp.org/blog/2016/02/a-bit-of-background-for-concepts-and-cpp17-bjarne-stroustrup)
 * [Concepts Lite](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3580.pdf)
